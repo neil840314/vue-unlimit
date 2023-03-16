@@ -1,43 +1,52 @@
 <script setup lang="ts">
 // import { useOrderStore } from '@/stores/order'
 // import { storeToRefs } from 'pinia'
-import { ref, onMounted, type Ref } from 'vue';
+import { onMounted } from 'vue';
+import { useGithubRepositories } from '../stores/data';
 
-const categories: Ref<any[]> = ref([
-  {
-    id: '64f',
-    name: '好喝黑糖',
-    children: [
-      {
-        id: '445',
-        name: '黑糖鮮奶',
-        children: [
-          { id: '37a', name: '黑糖珍珠鮮奶' },
-          { id: 'feb', name: '黑糖芋圓鮮奶' },
-          { id: '59c', name: '黑糖蒟蒻鮮奶' },
-        ],
-      },
-      {
-        id: '29e',
-        name: '黑糖冬瓜',
-        children: [
-          { id: 'ac3', name: '黑糖冬瓜牛奶' },
-          { id: 'ca0', name: '黑糖冬瓜珍珠' },
-        ],
-      },
-    ],
-  },
-]);
+const { repositories, fetchRepositories } = useGithubRepositories();
 
 onMounted(() => {
-  console.log(categories);
+  console.log(fetchRepositories('franklion'));
+  console.log(repositories);
+  fetchRepositories('franklion');
 });
 </script>
 
 <template>
-  <div></div>
+  <div>
+    <div>
+      <h3 class="title">franklion repo list:</h3>
+    </div>
+    <div class="list">
+      <div v-for="repo in repositories" :key="repo" class="repo">
+        <div class="name">{{ repo['name'] }}</div>
+        <div>{{ repo['description'] ?? '無' }}</div>
+        <a>{{ repo['url'] }}</a>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 /** style */
+.title {
+  font-weight: 700;
+}
+
+.list {
+  margin-top: 20px;
+
+  .repo {
+    background-color: #fff;
+    color: black;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+
+    .name {
+      font-weight: 700;
+    }
+  }
+}
 </style>

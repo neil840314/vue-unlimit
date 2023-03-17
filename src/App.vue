@@ -4,7 +4,7 @@ import HelloWorld from './components/HelloWorld.vue';
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <img
       alt="Vue logo"
       class="logo"
@@ -22,7 +22,8 @@ import HelloWorld from './components/HelloWorld.vue';
         <RouterLink to="/unlimit">無限卷軸</RouterLink>
       </nav>
     </div>
-  </header>
+  </header> -->
+  <RouterLink to="/unlimit">無限卷軸</RouterLink>
 
   <RouterView />
 </template>

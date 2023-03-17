@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue';
+import { reactive } from 'vue';
 import axios from 'axios';
 import { defineStore } from 'pinia';
 
@@ -7,15 +7,16 @@ export const useGithubRepositories = defineStore('data', () => {
     repositories: [],
   });
 
-  const fetchRepositories = async (username: string) => {
-    console.log(username);
-    const response = await axios.get(
-      `https://api.github.com/users/${username}/repos`,
-    );
-    state.repositories = response.data;
+  const getRepositories = async (username: string, length: number) => {
+    try {
+      const response = await axios.get(
+        `https://api.github.com/users/${username}/repos?per_page=${length}&page=1`,
+      );
+      state.repositories = response.data;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const repositories = computed(() => state.repositories);
-
-  return { fetchRepositories, repositories };
+  return { getRepositories, state };
 });
